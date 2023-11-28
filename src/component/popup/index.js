@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "./popup.module.css";
 
 const Popup = ({data, popupClosed, clickedPostIndex }) => {
-    console.log("res", data);
     const handlePopupBackClick = (event) => {
         event.stopPropagation();
         popupClosed(null);

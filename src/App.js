@@ -15,11 +15,9 @@ const App = () => {
     return new Promise((resolve, reject) => {
       getCall("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
-        console.log("res", res);
         resolve(res);
       })
       .catch((err) => {
-        console.error(err);
         reject(err);
       });
     })
@@ -38,7 +36,6 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log("mount");
     Promise.all([getUserData(), getPostData()]).then((res)=>{
       setUserData(res[0]);
       setPostData(res[1]);
@@ -56,16 +53,3 @@ const App = () => {
 }
 
 export default React.memo(App);
-
-// import React, { useEffect } from "react";
-
-// const App = () => {
-//   useEffect(()=>{
-//     console.log("mount");
-//   },[])
-//   return (
-//     <div>Hello</div>
-//   )
-// }
-
-// export default App;
