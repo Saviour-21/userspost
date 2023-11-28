@@ -1,0 +1,10 @@
+.postContainer{
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* width: calc(100% / 3); */
+    padding: 10px 20px;
+    cursor: pointer;
+}

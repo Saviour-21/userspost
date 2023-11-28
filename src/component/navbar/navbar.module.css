@@ -1,0 +1,9 @@
+.navWrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+.counterWrapper{
+    display: flex;
+    gap: 10px
+}

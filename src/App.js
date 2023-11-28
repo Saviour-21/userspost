@@ -1,25 +1,71 @@
-import logo from './logo.svg';
+import React from 'react';
+import { useEffect, useState } from 'react';
+
+import { Routes, Route} from "react-router-dom";
+import { getCall } from './Apicall';
 import './App.css';
 
-function App() {
+import Home from './pages/Home';
+import UserDetails from './pages/userDetails/userdetails';
+
+const App = () => {
+  const [userData, setUserData] = useState([]);
+  const [postData, setPostData] = useState([]);
+  const getUserData =  () => {
+    return new Promise((resolve, reject) => {
+      getCall("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        console.log("res", res);
+        resolve(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+      });
+    })
+  };
+
+  const getPostData = () => {
+    return new Promise((resolve, reject) => {
+      getCall("https://jsonplaceholder.typicode.com/posts")
+      .then((res)=>{
+        resolve(res);
+      })
+      .catch((err)=>{
+        reject(err);
+      })
+    })
+  }
+
+  useEffect(() => {
+    console.log("mount");
+    Promise.all([getUserData(), getPostData()]).then((res)=>{
+      setUserData(res[0]);
+      setPostData(res[1]);
+    })
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Home data={userData} postData={postData}/>}/>
+        <Route path={`/postdetails/:userid`} element={<UserDetails postData={postData} />}/>
+      </Routes>
     </div>
   );
 }
 
-export default App;
+export default React.memo(App);
+
+// import React, { useEffect } from "react";
+
+// const App = () => {
+//   useEffect(()=>{
+//     console.log("mount");
+//   },[])
+//   return (
+//     <div>Hello</div>
+//   )
+// }
+
+// export default App;
